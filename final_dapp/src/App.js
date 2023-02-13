@@ -76,17 +76,15 @@ function App() {
   };
 
   // Validation
-  const handleVerify = async () => {
+  const handleVerify = () => {
     try {
-      const establishment = await paypalContract.functions
-        .getUser(recipientAddress)
-        .then((result) => {
-          if (result[1]) {
-            setS1(result[0][0]);
-            setS2(result[0][1]);
-            setS3(result[0][2]);
-          }
-        });
+      paypalContract.functions.getUser(recipientAddress).then((result) => {
+        if (result[1]) {
+          setS1(result[0][0]);
+          setS2(result[0][1]);
+          setS3(result[0][2]);
+        }
+      });
     } catch (error) {
       console.log(error);
     }

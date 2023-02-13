@@ -8,7 +8,6 @@ const PopUpValidation = (props) => {
       <div
         onClick={(e) => {
           e.stopPropagation();
-          console.log(props);
         }}
         className="popup"
       >

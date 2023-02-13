@@ -4,10 +4,12 @@ import QrReader from "react-qr-reader";
 
 const PopUpCamera = (props) => {
   const [result, setResult] = useState(null);
+  const [scannedData, setScannedData] = useState(null);
   const ref = useRef(null);
 
   const handleScan = (data) => {
     setResult(data);
+    setScannedData(data);
     if (data !== null) {
       ref.current.stopCamera();
     }
@@ -19,7 +21,7 @@ const PopUpCamera = (props) => {
 
   useEffect(() => {
     props.setTrigger(false);
-    props.onScanning(result);
+    props.onScanning(scannedData);
     setResult(null);
   }, [result]);
 
