@@ -115,7 +115,7 @@ function App() {
   useEffect(() => {
     ethereum.on("accountsChanged", async (accounts) => {
       setAddress(accounts[0]);
-      setPaypalContractAddress("0x084690A022e90ddB669fb2E4Bbc99640892CCd8f");
+      setPaypalContractAddress("0x36dd642eb0f23348a7c0e3ebfec7a08be37215dc");
       setExplorer("https://goerli.etherscan.io/");
       //setCurrency("GorelliEth");
     });
