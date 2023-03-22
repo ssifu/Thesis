@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Main from "./components/Main";
 import Login from "./components/Login";
 import { ethers } from "ethers";
-import paypal from "./paypal/paypal.json";
+import transaction from "./transaction/transaction.json";
 
 const AppState = createContext();
 
@@ -15,7 +15,8 @@ function App() {
   const [currency, setCurrency] = useState("");
   const [recipientAddress, setRecipientAddress] = useState("");
   const [amount, setAmount] = useState("");
-  const [paypalContractAddress, setPaypalContractAddress] = useState("");
+  const [transactionContractAddress, setTransactionContractAddress] =
+    useState("");
   const [explorer, setExplorer] = useState("");
   const [txLoading, setTxLoading] = useState(false);
   const [showRecentTx, setShowRecentTx] = useState(false);
@@ -44,16 +45,16 @@ function App() {
     getbal();
   });
 
-  const paypalContract = new ethers.Contract(
-    paypalContractAddress,
-    paypal.output.abi,
+  const transactionContract = new ethers.Contract(
+    transactionContractAddress,
+    transaction.output.abi,
     signer
   );
 
   const transferAmount = async () => {
     setTxLoading(true);
     try {
-      const tx = await paypalContract._transfer(recipientAddress, "Eth", {
+      const tx = await transactionContract._transfer(recipientAddress, "Eth", {
         value: ethers.utils.parseEther(amount),
       });
 
@@ -78,7 +79,7 @@ function App() {
   // Validation
   const handleVerify = () => {
     try {
-      paypalContract.functions.getUser(recipientAddress).then((result) => {
+      transactionContract.functions.getUser(recipientAddress).then((result) => {
         if (result[1]) {
           setS1(result[0][0]);
           setS2(result[0][1]);
@@ -95,7 +96,7 @@ function App() {
   const saveTx = async () => {
     setSaveTxLoad(true);
     try {
-      const tx = await paypalContract.saveTx(
+      const tx = await transactionContract.saveTx(
         recentTx.from,
         recentTx.to,
         ethers.utils.parseEther(recentTx.amount),
@@ -115,7 +116,9 @@ function App() {
   useEffect(() => {
     ethereum.on("accountsChanged", async (accounts) => {
       setAddress(accounts[0]);
-      setPaypalContractAddress("0x36dd642eb0f23348a7c0e3ebfec7a08be37215dc");
+      setTransactionContractAddress(
+        "0xd2e7259c006d9e334f098a0fa37b15e19de06823"
+      );
       setExplorer("https://goerli.etherscan.io/");
       //setCurrency("GorelliEth");
     });
@@ -137,8 +140,8 @@ function App() {
         setAddress,
         balance,
         setBalance,
-        paypalContractAddress,
-        setPaypalContractAddress,
+        transactionContractAddress,
+        setTransactionContractAddress,
         currency,
         setCurrency,
         recipientAddress,
@@ -157,7 +160,7 @@ function App() {
         recentTx,
         setRecentTx,
         saveTx,
-        paypalContract,
+        transactionContract,
         handleVerify,
         verifyButtonFunctionsInApp,
         setS1,

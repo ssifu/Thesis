@@ -10,10 +10,12 @@ const Recipients = () => {
 
   useEffect(() => {
     async function getData() {
-      const recipients = await App.paypalContract.filters.recipeints(
+      const recipients = await App.transactionContract.filters.recipeints(
         App.address
       );
-      const recipentsData = await App.paypalContract.queryFilter(recipients);
+      const recipentsData = await App.transactionContract.queryFilter(
+        recipients
+      );
       setData(recipentsData);
     }
 
@@ -22,7 +24,7 @@ const Recipients = () => {
 
   const Add_address = async () => {
     try {
-      const tx = await App.paypalContract.addressRecipient(
+      const tx = await App.transactionContract.addressRecipient(
         recipientAddress,
         recipientName
       );

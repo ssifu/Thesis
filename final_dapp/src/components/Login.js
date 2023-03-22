@@ -29,8 +29,8 @@ const Login = () => {
         } else {
           App.setLogin(true);
           App.setCurrency("Eth");
-          App.setPaypalContractAddress(
-            "0x36dd642eb0f23348a7c0e3ebfec7a08be37215dc"
+          App.setTransactionContractAddress(
+            "0xd2e7259c006d9e334f098a0fa37b15e19de06823"
           );
           App.setExplorer("https://goerli.etherscan.io/");
         }
